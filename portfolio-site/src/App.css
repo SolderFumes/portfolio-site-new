@@ -1,0 +1,43 @@
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+.mainDiv {
+  width: 100%;
+  height: 100%;
+}
+
+.desktop {
+  width: 94%;
+  height: 94%;
+  margin: 2%;
+  border: 2px solid black;
+}
+
+.appWindow {
+  position: absolute;
+  user-select: none;
+  border: 2px solid black;
+  width: 75%;
+  height: 65%;
+}
+
+.dragbar {
+  width: 100%;
+  display: flex;
+  background-color: gray;
+  cursor: move;
+}
+
+.windowContent {
+  border: 2px solid black;
+}
+
+.minimize {
+  margin-left: auto;
+}
