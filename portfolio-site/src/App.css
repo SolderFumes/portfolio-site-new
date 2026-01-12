@@ -14,7 +14,7 @@ html, body {
 
 .desktop {
   width: 94%;
-  height: 94%;
+  height: 60%;
   margin: 2%;
   border: 2px solid black;
 }
@@ -23,8 +23,8 @@ html, body {
   position: absolute;
   user-select: none;
   border: 2px solid black;
-  width: 75%;
-  height: 65%;
+  width: 65%;
+  height: 45%;
 }
 
 .dragbar {
