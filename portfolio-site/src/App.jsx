@@ -11,6 +11,8 @@ export default function App() {
 
 function Desktop() {
 	const desktopRef = useRef(null)
+	const [windows, setWindows] = useState([]) // array of windows
+	let highestZ = 1
 	function AppWindow() {
 		const leftOffsetRef = useRef([0, 0])
 		const rightOffsetRef = useRef([0, 0])
@@ -33,6 +35,8 @@ function Desktop() {
 			rightOffsetRef.current = [rightOffsetX, bottomOffsetY]
 			console.log(leftOffsetRef.current)
 			console.log(rightOffsetRef.current)
+
+			appWindowRef.current.style.zIndex = ++highestZ
 			// If something is being dragged, we will always handle mousemove even if the mouse is over another element
 			window.addEventListener('mousemove', dragMove)
 			window.addEventListener('mouseup', stopDragging)
@@ -68,9 +72,17 @@ function Desktop() {
 			</div>
 		)
 	}
+	function handleClick() {
+		const newWindow = {id: Date.now()} // create an object with one attribute so that we can keep track of our windows
+		highestZ++
+		setWindows([...windows, newWindow])
+	}
 	return (
 		<div ref={desktopRef} className="desktop" id="desktop">
-			<AppWindow />
+			<button class="newWindow" onClick={handleClick}>New Window</button>
+			{windows.map((theWindow) => (
+				<AppWindow key={theWindow.id}/>
+			))}
 		</div>
 	)
 }

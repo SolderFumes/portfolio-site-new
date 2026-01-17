@@ -25,6 +25,7 @@ html, body {
   border: 2px solid black;
   width: 65%;
   height: 45%;
+  background-color: white;
 }
 
 .dragbar {
@@ -36,6 +37,11 @@ html, body {
 
 .windowContent {
   border: 2px solid black;
+}
+
+.newWindow {
+  position: relative;
+  z-index: 999;
 }
 
 .minimize {
