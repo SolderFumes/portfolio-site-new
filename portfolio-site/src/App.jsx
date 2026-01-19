@@ -12,8 +12,9 @@ export default function App() {
 function Desktop() {
 	const desktopRef = useRef(null)
 	const [windows, setWindows] = useState([]) // array of windows
+	const [idNum, setIdNum] = useState(0)
 	let highestZ = 1
-	function AppWindow() {
+	function AppWindow({myId}) {
 		const leftOffsetRef = useRef([0, 0])
 		const rightOffsetRef = useRef([0, 0])
 		const appWindowRef = useRef(null)
@@ -59,29 +60,43 @@ function Desktop() {
 			window.removeEventListener('mousemove', dragMove)
 			window.removeEventListener('mouseup', stopDragging)
 		}
+		function closeWindow(event) {
+			console.log('myId' + myId)
+			console.log(windows)
+			setWindows( windows.filter(win => win.id !== myId ))
+			console.log(windows)
+		}
 		return (
 			<div ref={appWindowRef} className="appWindow">	
 				<div className="dragbar" onMouseDown={(event) => startDragging(event)}>
 					<button className="minimize">-</button>
 					<button className="fullscreen">□</button>
-					<button className="close">X</button>
+					<button className="close" onClick={closeWindow}>X</button>
 				</div>
 				<div className="windowContent">
-
+					<object id="resume" data="https://www.solderfum.es/images/luka_schuller_resume.pdf?embedded=true">
+					</object>
 				</div>
 			</div>
 		)
 	}
-	function handleClick() {
-		const newWindow = {id: Date.now()} // create an object with one attribute so that we can keep track of our windows
+	function handleClick(event) { // somebody has tried to open a new window
+		const newWindow = {id: idNum} // create an object with one attribute so that we can keep track of our windows
+		setIdNum(idNum + 1)
 		highestZ++
 		setWindows([...windows, newWindow])
+
+		switch (event.target.id) { // there's some attribute in the button that tells us what content to put inside the window
+			//case 'resume':
+				//event.target.appendChild(
+
+		}
 	}
 	return (
 		<div ref={desktopRef} className="desktop" id="desktop">
-			<button class="newWindow" onClick={handleClick}>New Window</button>
+			<button className="newWindow" data-content="resume" onClick={handleClick}> Resume.pdf </button>
 			{windows.map((theWindow) => (
-				<AppWindow key={theWindow.id}/>
+				<AppWindow key={theWindow.id} myId={theWindow.id} />
 			))}
 		</div>
 	)

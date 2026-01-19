@@ -14,7 +14,7 @@ html, body {
 
 .desktop {
   width: 94%;
-  height: 60%;
+  height: 80%;
   margin: 2%;
   border: 2px solid black;
 }
@@ -23,8 +23,8 @@ html, body {
   position: absolute;
   user-select: none;
   border: 2px solid black;
-  width: 65%;
-  height: 45%;
+  width: 35%;
+  height: 55%;
   background-color: white;
 }
 
@@ -37,6 +37,13 @@ html, body {
 
 .windowContent {
   border: 2px solid black;
+	flex: 1;
+	height: 96%;
+}
+
+.windowContent object {
+	height: 100%;
+	width: 100%;
 }
 
 .newWindow {
