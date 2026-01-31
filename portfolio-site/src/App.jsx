@@ -14,7 +14,7 @@ function Desktop() {
 	const [windows, setWindows] = useState([]) // array of windows
 	const [idNum, setIdNum] = useState(0)
 	let highestZ = 1
-	function AppWindow({myId}) {
+	function AppWindow({myId, content}) {
 		const leftOffsetRef = useRef([0, 0])
 		const rightOffsetRef = useRef([0, 0])
 		const appWindowRef = useRef(null)
@@ -66,6 +66,13 @@ function Desktop() {
 			setWindows( windows.filter(win => win.id !== myId ))
 			console.log(windows)
 		}
+		let obj
+		switch (content) { // there's some attribute in the button that tells us what content to put inside the window
+		case 'resume':
+			obj =  <object data='https://www.solderfum.es/images/luka_schuller_resume.pdf?embedded=true'></object>
+		default:
+			console.error('You tried to open a new window but the data-content field of the button was not set correctly.')
+		}
 		return (
 			<div ref={appWindowRef} className="appWindow">	
 				<div className="dragbar" onMouseDown={(event) => startDragging(event)}>
@@ -74,30 +81,25 @@ function Desktop() {
 					<button className="close" onClick={closeWindow}>X</button>
 				</div>
 				<div className="windowContent">
-					<object id="resume" data="https://www.solderfum.es/images/luka_schuller_resume.pdf?embedded=true">
-					</object>
+					{obj}
 				</div>
 			</div>
 		)
 	}
 	function handleClick(event) { // somebody has tried to open a new window
-		const newWindow = {id: idNum} // create an object with one attribute so that we can keep track of our windows
+		const newWindow = {id: idNum, content: event.currentTarget.dataset.content} // create an object with one attribute so that we can keep track of our windows
 		setIdNum(idNum + 1)
 		highestZ++
 		setWindows([...windows, newWindow])
 
-		switch (event.target.id) { // there's some attribute in the button that tells us what content to put inside the window
-			//case 'resume':
-				//event.target.appendChild(
-
-		}
+		let element = event.currentTarget
 	}
 	return (
 		<div className="desktopContainer">
 			<div ref={desktopRef} className="desktop" id="desktop">
 				<button className="newWindow" data-content="resume" onClick={handleClick}> Resume.pdf </button>
 				{windows.map((theWindow) => (
-					<AppWindow key={theWindow.id} myId={theWindow.id} />
+					<AppWindow key={theWindow.id} myId={theWindow.id} content={theWindow.content} />
 				))}
 			</div>
 			<div className='menuBar'>
@@ -107,4 +109,3 @@ function Desktop() {
 		</div>
 	)
 }
-
