@@ -69,7 +69,7 @@ function Desktop() {
 		return (
 			<div ref={appWindowRef} className="appWindow">	
 				<div className="dragbar" onMouseDown={(event) => startDragging(event)}>
-					<button className="minimize">-</button>
+					<button className="minimize" onClick={closeWindow}>-</button>
 					<button className="fullscreen">□</button>
 					<button className="close" onClick={closeWindow}>X</button>
 				</div>
@@ -93,11 +93,18 @@ function Desktop() {
 		}
 	}
 	return (
-		<div ref={desktopRef} className="desktop" id="desktop">
-			<button className="newWindow" data-content="resume" onClick={handleClick}> Resume.pdf </button>
-			{windows.map((theWindow) => (
-				<AppWindow key={theWindow.id} myId={theWindow.id} />
-			))}
+		<div className="desktopContainer">
+			<div ref={desktopRef} className="desktop" id="desktop">
+				<button className="newWindow" data-content="resume" onClick={handleClick}> Resume.pdf </button>
+				{windows.map((theWindow) => (
+					<AppWindow key={theWindow.id} myId={theWindow.id} />
+				))}
+			</div>
+			<div className='menuBar'>
+				<button className='startMenu'>Start</button>
+				<button className='fileManager' data-content='fileManager' onClick={handleClick}>File Manager</button>
+			</div>
 		</div>
 	)
 }
+
